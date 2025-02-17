@@ -29,7 +29,7 @@ app.post("/render", (req, res) => {
 
     fs.writeFileSync(inputFile, mermaidCode);
 
-    exec(`npx --yes @mermaid-js/mermaid-cli -i ${inputFile} -o ${outputFile}`, (error, stdout, stderr) => {
+    exec(`./run-mmdc.sh -i ${inputFile} -o ${outputFile}`, (error, stdout, stderr) => {
         if (error) {
             console.error("Erro ao gerar diagrama:", stderr);
             return res.status(500).json({ error: `Erro ao gerar diagrama: ${stderr}` });
