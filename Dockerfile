@@ -1,23 +1,22 @@
-# Usa uma imagem Node.js oficial
+# Usa uma imagem oficial do Node.js 18
 FROM node:18
 
 # Define o diretório de trabalho dentro do contêiner
 WORKDIR /app
 
-# Copia os arquivos do projeto para o contêiner
+# Copia os arquivos package.json e package-lock.json para instalar as dependências primeiro (cache eficiente)
 COPY package.json package-lock.json ./
+
+# Instala todas as dependências, incluindo @mermaid-js/mermaid-cli
 RUN npm install
 
-# Copia todos os arquivos para o contêiner
+# Copia todos os arquivos do projeto para o contêiner
 COPY . .
 
-# Instala o Mermaid CLI como dependência local
-RUN npm install @mermaid-js/mermaid-cli --save
+# Testa se o mmdc está funcionando dentro do contêiner
+RUN npx mmdc -V
 
-# Testa se o mmdc está funcionando
-RUN /app/node_modules/.bin/mmdc -V
-
-# Expõe a porta que a API usará
+# Expõe a porta da API
 EXPOSE 3000
 
 # Comando para rodar a API
