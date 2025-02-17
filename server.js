@@ -6,7 +6,7 @@ const fs = require("fs");
 const path = require("path");
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -23,13 +23,15 @@ app.post("/render", (req, res) => {
 
     console.log("Código Mermaid recebido corretamente:", mermaidCode);
 
-
     const inputFile = path.join(__dirname, "temp.mmd");
     const outputFile = path.join(__dirname, "diagram.png");
 
     fs.writeFileSync(inputFile, mermaidCode);
 
-    exec(`npx mmdc -i ${inputFile} -o ${outputFile}`, (error, stdout, stderr) => {
+    // Utiliza o caminho absoluto para o executável do mmdc
+    const mmdcPath = path.join(__dirname, "node_modules", ".bin", "mmdc");
+
+    exec(`${mmdcPath} -i ${inputFile} -o ${outputFile}`, (error, stdout, stderr) => {
         if (error) {
             console.error("Erro ao gerar diagrama:", stderr);
             return res.status(500).json({ error: `Erro ao gerar diagrama: ${stderr}` });
@@ -46,4 +48,3 @@ app.post("/render", (req, res) => {
 app.listen(PORT, () => {
     console.log(`Servidor rodando em http://localhost:${PORT}`);
 });
-
