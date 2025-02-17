@@ -11,12 +11,14 @@ RUN npm install
 # Copia todos os arquivos para o contêiner
 COPY . .
 
-# Instala o Mermaid CLI apenas localmente no projeto
-RUN npx --yes @mermaid-js/mermaid-cli -V
+# Instala o Mermaid CLI como dependência local
+RUN npm install @mermaid-js/mermaid-cli --save
+
+# Testa se o mmdc está funcionando
+RUN /app/node_modules/.bin/mmdc -V
 
 # Expõe a porta que a API usará
 EXPOSE 3000
 
 # Comando para rodar a API
 CMD ["node", "server.js"]
-
