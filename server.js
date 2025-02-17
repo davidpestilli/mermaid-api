@@ -31,7 +31,7 @@ app.post("/render", (req, res) => {
   // Caminho absoluto para o executável do mmdc
   const mmdcPath = path.join(__dirname, "node_modules", ".bin", "mmdc");
 
-  // Tenta ajustar as permissões do executável
+  // Ajusta as permissões do executável
   try {
     fs.chmodSync(mmdcPath, 0o755);
     console.log("Permissões ajustadas para", mmdcPath);
@@ -39,7 +39,10 @@ app.post("/render", (req, res) => {
     console.error("Erro ao alterar permissões do mmdc:", chmodError);
   }
 
-  exec(`${mmdcPath} -i ${inputFile} -o ${outputFile}`, (error, stdout, stderr) => {
+  // Comando com parâmetro para definir o caminho do Chromium
+  const command = `${mmdcPath} -i ${inputFile} -o ${outputFile} --chromePath=/usr/bin/chromium`;
+
+  exec(command, (error, stdout, stderr) => {
     if (error) {
       console.error("Erro ao gerar diagrama:", stderr);
       return res.status(500).json({ error: `Erro ao gerar diagrama: ${stderr}` });

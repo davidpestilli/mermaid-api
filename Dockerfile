@@ -1,6 +1,9 @@
 # Usa uma imagem oficial do Node.js 18
 FROM node:18
 
+# Instala o Chromium (versão headless)
+RUN apt-get update && apt-get install -y chromium
+
 # Define o diretório de trabalho dentro do contêiner
 WORKDIR /app
 
