@@ -4,7 +4,8 @@
   "description": "API para gerar diagramas Mermaid",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "mmdc": "npx @mermaid-js/mermaid-cli"
   },
   "keywords": [],
   "author": "",
