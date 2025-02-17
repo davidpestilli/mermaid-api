@@ -11,11 +11,12 @@ RUN npm install
 # Copia todos os arquivos para o contêiner
 COPY . .
 
-# Instala o mermaid-cli globalmente
-RUN npm install -g @mermaid-js/mermaid-cli
+# Instala o Mermaid CLI apenas localmente no projeto
+RUN npx --yes @mermaid-js/mermaid-cli -V
 
 # Expõe a porta que a API usará
 EXPOSE 3000
 
 # Comando para rodar a API
 CMD ["node", "server.js"]
+
