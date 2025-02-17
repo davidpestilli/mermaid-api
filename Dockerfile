@@ -10,6 +10,9 @@ COPY package.json package-lock.json ./
 # Instala todas as dependências, incluindo @mermaid-js/mermaid-cli
 RUN npm install
 
+# Adiciona permissão de execução para o mmdc
+RUN chmod +x ./node_modules/.bin/mmdc
+
 # Copia todos os arquivos do projeto para o contêiner
 COPY . .
 
