@@ -31,7 +31,7 @@ app.post("/render", (req, res) => {
   // Caminho absoluto para o executável do mmdc
   const mmdcPath = path.join(__dirname, "node_modules", ".bin", "mmdc");
 
-  // Ajusta as permissões do executável (caso ainda não estejam corretas)
+  // Ajusta as permissões do executável
   try {
     fs.chmodSync(mmdcPath, 0o755);
     console.log("Permissões ajustadas para", mmdcPath);
@@ -39,14 +39,13 @@ app.post("/render", (req, res) => {
     console.error("Erro ao alterar permissões do mmdc:", chmodError);
   }
 
-  // Define a variável de ambiente para informar ao Puppeteer onde está o Chromium.
-  // Certifique-se de que o caminho corresponde ao local de instalação no container.
+  // Define a variável de ambiente para informar ao Puppeteer onde está o Chromium Browser.
   const env = {
     ...process.env,
-    PUPPETEER_EXECUTABLE_PATH: '/usr/bin/chromium'
+    PUPPETEER_EXECUTABLE_PATH: '/usr/bin/chromium-browser'
   };
 
-  // Comando sem a opção --chromePath, já que não é reconhecida
+  // Comando para gerar o diagrama
   const command = `${mmdcPath} -i ${inputFile} -o ${outputFile}`;
 
   exec(command, { env }, (error, stdout, stderr) => {
