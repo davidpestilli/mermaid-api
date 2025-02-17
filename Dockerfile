@@ -2,7 +2,7 @@
 FROM node:18
 
 # Atualiza os pacotes e instala o Chromium Browser
-RUN apt-get update && apt-get install -y chromium-browser
+RUN apt-get update && apt-get install -y chromium
 
 # Define o diretório de trabalho dentro do contêiner
 WORKDIR /app

@@ -39,10 +39,10 @@ app.post("/render", (req, res) => {
     console.error("Erro ao alterar permissões do mmdc:", chmodError);
   }
 
-  // Define a variável de ambiente para informar ao Puppeteer onde está o Chromium Browser.
+  // Define a variável de ambiente para informar ao Puppeteer onde está o Chromium
   const env = {
     ...process.env,
-    PUPPETEER_EXECUTABLE_PATH: '/usr/bin/chromium-browser'
+    PUPPETEER_EXECUTABLE_PATH: '/usr/bin/chromium'
   };
 
   // Comando para gerar o diagrama
